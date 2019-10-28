@@ -1,8 +1,8 @@
-lint:
-	pylint *.py
-test:
-	python -m pytest
-run:
-	python app.py
 format:
 	black *.py
+lint:
+	pylint *.py
+run:
+	python app.py
+test:
+	python -m pytest
