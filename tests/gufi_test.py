@@ -15,14 +15,13 @@ class TestGufi(object):
     def teardown_class(cls):
         cls.mock_get_patcher.stop()
 
-    # def test_rtmclient(self):
-    #     self.mock_get.return_value = slack.RTMClient()
-    #     cfg = {}
-    #     cfg['slack'] = {}
-    #     cfg['slack']['api_token'] = "foobar"
-    #     sg = SlackGufi(cfg)
-    #     logger.debug(sg)
-    #     assert type(sg.get_rtmclient()) == slack.rtm.client.RTMClient
+    def test_rtmclient(self):
+        self.mock_get.return_value = Mock(ok=True)
+        cfg = {}
+        cfg['slack'] = {}
+        cfg['slack']['api_token'] = "foobar"
+        sg_rtm = SlackGufi(cfg).get_rtmclient()
+        assert sg_rtm is not None
 
     def test_get_token(self):
         cfg = {}
