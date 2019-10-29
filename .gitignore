@@ -1,4 +1,5 @@
 config.yaml
+scratchpad.txt
 .idea/
 .pytest_cache
 __pycache__/
