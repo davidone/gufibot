@@ -1,8 +1,11 @@
+"""
+Define a logging instance
+"""
 import logging
 
-logger = logging.getLogger()
-handler = logging.StreamHandler()
-formatter = logging.Formatter("%(asctime)s %(name)-12s %(levelname)-8s %(message)s")
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.setLevel(logging.DEBUG)
+LOGGER = logging.getLogger()
+HANDLER = logging.StreamHandler()
+FORMATTER = logging.Formatter("%(asctime)s %(name)-12s %(levelname)-8s %(message)s")
+HANDLER.setFormatter(FORMATTER)
+LOGGER.addHandler(HANDLER)
+LOGGER.setLevel(logging.DEBUG)

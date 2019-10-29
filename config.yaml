@@ -1,5 +1,0 @@
-slack:
-  bot_name: "bot_name"
-  bot_id: "bot_id"
-  api_token: "api_token"
-  channel: "channel"

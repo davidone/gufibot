@@ -1,15 +1,23 @@
-import yaml
+"""
+Application Entrypoint
+"""
 import os
 import re
+import sys
+import yaml
+
 import slack
 from gufi import SlackGufi
-from logging_config import logger
+from logging_config import LOGGER
 
 RGX_MSG = r"^([a-zA-Z0-9]+)$"
 
 
 @slack.RTMClient.run_on(event="message")
 def rtm_message(**payload):
+    """
+    Main RTM function to process requests
+    """
     data = payload["data"]
     if "subtype" in data and data["subtype"] == "bot_message":
         # We don't reply to bots, only humans
@@ -21,7 +29,7 @@ def rtm_message(**payload):
     if re_text is None or len(re_text.groups()) == 0:
         return
 
-    if type(text) == str and text.lower() == "fortune":
+    if isinstance(text, str) and text.lower() == "fortune":
         fortune_path = "/usr/local/bin/fortune"
         if not (os.path.isfile(fortune_path) or os.access(fortune_path, os.X_OK)):
             fortune_out = f"{fortune_path} not available"
@@ -34,10 +42,10 @@ def rtm_message(**payload):
 if __name__ == "__main__":
     try:
         with open("config.yaml", "r") as stream:
-            cfg_yaml = yaml.safe_load(stream)
-    except FileNotFoundError as e:
-        print(f"{e}")
-        exit(e.errno)
-    slack_gufi = SlackGufi(cfg_yaml)
-    logger.info(f"Application started")
-    slack_gufi.start()
+            CFG_YAML = yaml.safe_load(stream)
+    except FileNotFoundError as exc:
+        print(f"{exc}")
+        sys.exit(exc.errno)
+    SLACK_GUFI = SlackGufi(CFG_YAML)
+    LOGGER.info("Application started")
+    SLACK_GUFI.start()
