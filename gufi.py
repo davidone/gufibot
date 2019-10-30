@@ -1,13 +1,19 @@
 """
 Main Gufi Slackbot class
 """
+
+import re
 import slack
+from logging_config import LOGGER
+
+RGX_WEBMSG = r"^([a-zA-Z0-9\-_ !@]+)$"
 
 
 class SlackGufi:
     """
     Main Slack Gufi class
     """
+
     def __init__(self, cfg):
         """
         Constructor
@@ -45,8 +51,12 @@ class SlackGufi:
         return self._rtmclient.start() if self._rtmclient else None
 
     def send_message(self, text):
-        response = self._webclient.chat_postMessage(
-            channel='#general',
-            text=text)
-        assert response["ok"]
-        assert response["message"]["text"] == text
+        """
+        Send a generic message to Slack
+        """
+        rgx_text = re.match(RGX_WEBMSG, text)
+        if rgx_text is None or text != rgx_text.group():
+            LOGGER.warning("Unsupported %s", text)
+            return
+        response = self._webclient.chat_postMessage(channel="#general", text=text)
+        return response

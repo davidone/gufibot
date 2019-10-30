@@ -1,5 +1,5 @@
 """
-Application Entrypoint
+Application Entry point
 """
 import os
 import re
@@ -22,7 +22,6 @@ def rtm_message(**payload):
     if "subtype" in data and data["subtype"] == "bot_message":
         # We don't reply to bots, only humans
         return
-    web_client = payload["web_client"]
     text = data.get("text", [])
     re_text = re.match(RGX_MSG, text)
     if re_text is None or len(re_text.groups()) == 0:
@@ -35,6 +34,7 @@ def rtm_message(**payload):
         else:
             fortune_out = os.popen(fortune_path).read()
         channel_id = data["channel"]
+        web_client = payload["web_client"]
         web_client.chat_postMessage(channel=channel_id, text=f"```{fortune_out}```")
 
 
