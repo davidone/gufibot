@@ -1,4 +1,5 @@
 black
 pylint
 pytest
+pytest-cov
 slackclient==2.2.1 

@@ -18,6 +18,7 @@ class SlackGufi:
             self._config = cfg["slack"]
         # to include a check on cfg['slack']['api_token']
         self._rtmclient = slack.RTMClient(token=self._config["api_token"], ssl=False)
+        self._webclient = slack.WebClient(token=self._config["api_token"], ssl=False)
 
     def get_token(self):
         """
@@ -42,3 +43,10 @@ class SlackGufi:
         Start the RTMClient
         """
         return self._rtmclient.start() if self._rtmclient else None
+
+    def send_message(self, text):
+        response = self._webclient.chat_postMessage(
+            channel='#general',
+            text=text)
+        assert response["ok"]
+        assert response["message"]["text"] == text

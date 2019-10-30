@@ -1,5 +1,4 @@
 import pytest
-from logging_config import logger
 import slack
 from unittest.mock import Mock, patch
 from gufi import SlackGufi

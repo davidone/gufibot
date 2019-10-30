@@ -7,6 +7,6 @@ lint:
 run:
 	python app.py
 test:
-	python -m pytest
+	python -m pytest --cov=.
 
 all:	format lint test

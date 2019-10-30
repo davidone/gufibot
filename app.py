@@ -22,7 +22,6 @@ def rtm_message(**payload):
     if "subtype" in data and data["subtype"] == "bot_message":
         # We don't reply to bots, only humans
         return
-    # logger.debug(f"{data}")
     web_client = payload["web_client"]
     text = data.get("text", [])
     re_text = re.match(RGX_MSG, text)
@@ -47,5 +46,6 @@ if __name__ == "__main__":
         print(f"{exc}")
         sys.exit(exc.errno)
     SLACK_GUFI = SlackGufi(CFG_YAML)
+    SLACK_GUFI.send_message("yo!")
     LOGGER.info("Application started")
     SLACK_GUFI.start()
